@@ -1,14 +1,23 @@
 import { useState } from "react";
 import React from "react";
-
+import Login from "./Login";
+import Home from "./Home";
+import Authenticate from "./Authenticate";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 function App() {
-  const [noOfTimes, change] = useState(0);
-  function doChange() {
-    change(noOfTimes + 1);
-  }
   return (
     <div>
-      <p onClick={doChange}>CHup hoja {noOfTimes}</p>
+      <Switch>
+          <Route path="/Login" component={Login} onEnter={Authenticate}>
+          </Route>
+          <Route path="/Home" component={Home} onEnter={Authenticate}>
+          </Route>
+      </Switch> 
     </div>
   );
 }
