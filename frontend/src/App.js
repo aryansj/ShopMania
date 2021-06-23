@@ -2,7 +2,7 @@ import { useState } from "react";
 import React from "react";
 import Login from "./Login";
 import Home from "./Home";
-import Authenticate from "./Authenticate";
+
 import {
   BrowserRouter as Router,
   Switch,
@@ -12,12 +12,14 @@ import {
 function App() {
   return (
     <div>
-      <Switch>
-          <Route path="/Login" component={Login} onEnter={Authenticate}>
+      <Router> 
+        <Switch>
+          <Route path="/Login" component={Login}>
           </Route>
-          <Route path="/Home" component={Home} onEnter={Authenticate}>
+          <Route path="/Home" component={Home}>
           </Route>
-      </Switch> 
+      </Switch> </Router>
+     
     </div>
   );
 }

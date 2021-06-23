@@ -1,10 +1,24 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
+import { MyContextConsumer } from "./MyContext";
 
 function Login() {
-    const [isAuthenticated, handleAuth] = useState(false);
-    return (<div>
-        <button onClick= {() => {handleAuth(true)}}>lets go</button>
-    </div>)   
+  const history = useHistory();
+  return (
+    <MyContextConsumer>
+      {(context) => (
+        <div>
+          <button
+            onClick={() => {
+              if (context.isAuthenticated) history.push("/home");
+            }}
+          >
+            lets go
+          </button>
+        </div>
+      )}
+    </MyContextConsumer>
+  );
 }
 
 export default Login;
