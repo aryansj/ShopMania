@@ -1,23 +1,30 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { MyContextConsumer } from "./MyContext";
-
+import MyContext from "./MyContext";
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
+import Home from "./Home";
 function Login() {
   const history = useHistory();
+  const [isClicked, handleisClicked] = useState(false);
   return (
-    <MyContextConsumer>
-      {(context) => (
+    <MyContext.Provider value={isClicked}>
         <div>
+        
           <button
             onClick={() => {
-              if (context.isAuthenticated) history.push("/home");
+             handleisClicked(true); 
+             history.push("/Home");
             }}
           >
             lets go
           </button>
         </div>
-      )}
-    </MyContextConsumer>
+    </MyContext.Provider>
   );
 }
 

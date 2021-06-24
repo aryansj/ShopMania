@@ -1,13 +1,12 @@
 import React, { useContext } from "react";
-import { MyContextConsumer } from "./MyContext";
+import MyContext from "./MyContext";
 
 function Home(props) {
-  //const contextType = usecontext();
+  const contextType = useContext(MyContext);
+  console.log(contextType);
   //   if (contextType.isAuthe)
   return (
-    <MyContextConsumer>
-      {(context) => <div>{context.isAuthenticated}</div>}
-    </MyContextConsumer>
+    <div>{contextType}</div>
   );
 }
 

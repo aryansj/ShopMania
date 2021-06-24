@@ -1,19 +1,5 @@
 import React, { Component } from "react";
-const { Provider, Consumer } = React.createContext();
+const MyContext = React.createContext(false);
 
-class MyContextProvider extends Component {
-  state = {
-      isAuthenticated: false
-  };
-  render() {
-    return (
-      <Provider
-        value={{ isAuthenticated: this.state.isAuthenticated}}
-      >
-        {this.props.children}
-      </Provider>
-    );
-  }
-}
 
-export { MyContextProvider, Consumer as MyContextConsumer };
+export default MyContext;
