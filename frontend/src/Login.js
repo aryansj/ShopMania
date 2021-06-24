@@ -1,29 +1,27 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import MyContext from "./MyContext";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import App from "./App";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./Home";
 function Login() {
   const history = useHistory();
-  const [isClicked, handleisClicked] = useState(false);
+  const [isAuthenticated, handleisAuthenticated] = useState(false);
   return (
-    <MyContext.Provider value={isClicked}>
+    <MyContext.Provider value={isAuthenticated}>
+      {isAuthenticated === false ? (
         <div>
-        
           <button
             onClick={() => {
-             handleisClicked(true); 
-             history.push("/Home");
+              handleisAuthenticated(true);
             }}
           >
             lets go
           </button>
         </div>
+      ) : (
+        <App />
+      )}
     </MyContext.Provider>
   );
 }

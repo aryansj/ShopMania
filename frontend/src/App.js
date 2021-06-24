@@ -3,26 +3,18 @@ import React from "react";
 import Login from "./Login";
 import Home from "./Home";
 import MyContext from "./MyContext";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
+import Noob from "./Noob";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 function App() {
-  const [isAuthenticated, handleisAuthenticated] = useState(false);
   return (
-    <MyContext.Provider value={isAuthenticated}>
-
     <div>
-    <Router> 
+      <Router>
         <Switch>
-          <Route path="/Home" component={Home}>
-          </Route>
-      </Switch> </Router>
-     
+          <Route exact path="/" component={Home}></Route>
+          <Route exact path="/noob" component={Noob}></Route>
+        </Switch>{" "}
+      </Router>
     </div>
-    </MyContext.Provider>
   );
 }
 
