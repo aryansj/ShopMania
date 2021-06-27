@@ -1,6 +1,6 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import MyContext from "./MyContext";
+import MyContext from "./Reducer";
 
 function Home(props) {
   const contextType = useContext(MyContext);

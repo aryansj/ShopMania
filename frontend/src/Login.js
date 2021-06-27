@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import MyContext from "./MyContext";
+import MyContext from "./Reducer";
 import App from "./App";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import Home from "./Home";
