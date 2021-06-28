@@ -2,8 +2,7 @@ import { useState } from "react";
 import React from "react";
 import Login from "./Login";
 import Home from "./Home";
-import MyContext from "./Reducer";
-import Noob from "./Noob";
+
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 function App() {
   return (
@@ -11,8 +10,7 @@ function App() {
       <Router>
         <Switch>
           <Route exact path="/login" component={Login}></Route>
-          <Route exact path="/" component={Home}></Route>
-          <Route exact path="/noob" component={Noob}></Route>
+          <Route exact path="/home" component={Home}></Route>
         </Switch>{" "}
       </Router>
     </div>

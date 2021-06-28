@@ -1,22 +1,18 @@
 import React, { useContext } from "react";
 import { useHistory } from "react-router-dom";
-import MyContext from "./Reducer";
+import { AuthProvider, useAuthDispatch, useAuthState } from "./Context/Context";
 
 function Home(props) {
-  const contextType = useContext(MyContext);
+  const authState = useAuthState();
+  console.log(authState);
   const history = useHistory();
-  console.log(contextType);
-
+  if (authState.userToken === "") {
+    history.push("/login");
+  }
   return (
     <div>
-      Hello {contextType}
-      <button
-        onClick={() => {
-          history.push("/noob");
-        }}
-      >
-        lets go
-      </button>
+      Hello
+      <button>lets go</button>
     </div>
   );
 }

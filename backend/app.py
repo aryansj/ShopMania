@@ -3,8 +3,7 @@
 import requests
 import json
 
-from google.oauth2 import id_token
-from google.auth.transport import requests as req
+
 from flask import Flask
 from flask import request
 from flask import abort
@@ -20,48 +19,40 @@ cors = CORS(app, resources={
             r"*": {"origins": "http://localhost:3000,https://xmovie-xmania.netlify.app"}})
 myclient = pymongo.MongoClient(
     "mongodb+srv://MovieMania:MovieMania@cluster0.g7zov.mongodb.net/mydatabase?retryWrites=true&w=majority")
-mydb = myclient["mydatabase"]
+mydb = myclient["shopDb"]
 # movieCollection = mydb["movie"]
 userCollection = mydb["user"]
 # userCollection : { userToken, userID, passwordHash }
-
 
 
 @app.route('/getUser', methods=['POST', 'GET'])
 @cross_origin()
 def getUser():
     data = request.json
-    token = data["userToken"]
-    user = userCollection.find_one({"userToken" : token})
-    
-    if user:
-        del user["_id"]
-        return user["userID"]
-    return user    
-    # try:
-    #     idinfo = id_token.verify_oauth2_token(data["tokenObj"]["id_token"], req.Request(), "427815533001-v7anb53c19e0n5a0ru1af933v24e3mev.apps.googleusercontent.com")
-    #     foundUser = userCollection.find_one({"userID": data["profileObj"]["email"]})
-    #     if not foundUser:
-    #         #generate string and insert user
-    #         res = ''.join(secrets.choice(string.ascii_uppercase + string.digits)
-    #                                               for i in range(15))
-    #         res = str(res)
-    #         userCollection.insert_one({"userID": data["profileObj"]["email"], "movies": [], "ratedMovies": [], "secretPhrase" : res})
-    #         foundUser = userCollection.find_one({"userID": data["profileObj"]["email"]})
-    #     del foundUser["_id"]    
-    #     return foundUser
-    # except ValueError:
-    #     abort(404)                                   
+    print(data)
+    user = userCollection.find_one({"userToken": data["userToken"]})
+    print(user)
+    if not user:
+        abort(404)
+    del user["_id"]
+    return user["userID"]
 
-# @app.route('/search/<name>', methods=['POST', 'GET'])
-# @cross_origin()
-# def search(name):
-#     url = "https://api.themoviedb.org/3/search/multi?api_key=75b7e19a0927cfef46140801a9ae825b&language=en-US&query=" + \
-#         name + "&page=1"
-#     response = requests.request(
-#         "GET", url)
 
-#     return json.dumps(response.json()["results"][:5])
+@app.route('/authenticate', methods=['POST', 'GET'])
+@cross_origin()
+def authenticate():
+    data = request.json
+    user = userCollection.find_one(
+        {"userID": data["userID"], "passwordHash": data["password"]})
+    if not user:
+        res = ''.join(secrets.choice(string.ascii_uppercase + string.digits)
+                      for i in range(15))
+        userCollection.insert_one(
+            {"userID": data["userID"], "userToken": res, "passwordHash": data["password"]})
+    user = userCollection.find_one(
+        {"userID": data["userID"], "passwordHash": data["password"]})
+    del user["_id"]
+    return user["userToken"]
 
 
 # @app.route('/display', methods=['POST', 'GET'])
