@@ -42,19 +42,27 @@ def getUser():
 @cross_origin()
 def authenticate():
     data = request.json
+    errorMessage = ""
     user = userCollection.find_one(
         {"userID": data["userID"], "passwordHash": data["password"]})
     if not user:
-        res = ''.join(secrets.choice(string.ascii_uppercase + string.digits)
+        errorMessage = "User doesnt exist"
+        return {"type": 0, "token": errorMessage}
+    del user["_id"]
+    return {"type": 1, "token": user["userToken"]}
+
+@app.route('/register', methods=['POST', 'GET'])
+@cross_origin()
+def register():
+    data = request.json
+    res = ''.join(secrets.choice(string.ascii_uppercase + string.digits)
                       for i in range(15))
-        userCollection.insert_one(
+    userCollection.insert_one(
             {"userID": data["userID"], "userToken": res, "passwordHash": data["password"]})
     user = userCollection.find_one(
         {"userID": data["userID"], "passwordHash": data["password"]})
     del user["_id"]
-    return user["userToken"]
-
-
+    return user
 # @app.route('/display', methods=['POST', 'GET'])
 # @cross_origin()
 # def display():

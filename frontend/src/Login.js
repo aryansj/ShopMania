@@ -18,12 +18,16 @@ function Login() {
       password: currentPassword,
     };
     let response = await loginUser(dispatch, loginData);
-    if (response !== undefined) {
+    if (response.type === 1) {
       history.push("/home");
     } else {
       console.log("Fail");
     }
   };
+  const handleRegister = async (e) => {
+    e.preventDefault();
+    history.push("/register");
+  }
   return (
     <div>
       <input
@@ -38,7 +42,8 @@ function Login() {
           handlecurrentPassword(e.target.value);
         }}
       ></input>
-      <button onClick={handleLogin}>lets go</button>
+      <button onClick={handleLogin}>login</button>
+      <button onClick={handleRegister}>Register</button>
     </div>
   );
 }
